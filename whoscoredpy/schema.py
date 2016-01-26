@@ -33,7 +33,6 @@ class Performance(Base):
 class Player(Base):
     __tablename__ = "players"
     id = Column(Integer, primary_key=True)
-    team_id = Column(Integer, ForeignKey('teams.id')) 
     ws_id = Column(Integer)
     name = Column(String)
     age = Column(Integer)
@@ -41,6 +40,13 @@ class Player(Base):
     weight = Column(Integer)
     shirt = Column(Integer)
     position = Column(String)
+
+class TeamPlayer(Base):
+    __tablename__ = "team_players"
+    id = Column(Integer, primary_key=True)
+    team_id = Column(Integer, ForeignKey('teams.id')) 
+    player_id = Column(Integer, ForeignKey('players.id')) 
+
 
 class Team(Base):
     __tablename__ = "teams"
@@ -50,11 +56,11 @@ class Team(Base):
 
 
 class PlayerPerformaceMap(Base):
-    __tablename__ = "players"
+    __tablename__ = "player_performance_map"
     id = Column(Integer, primary_key=True)
     performance_id = Column(Integer, ForeignKey('performances.id')) 
     game_id = Column(Integer, ForeignKey('games.id')) 
-    player_id = Column(Integer, ForeignKey('players.id')) 
+    team_player_id = Column(Integer, ForeignKey('team_players.id')) 
     started = Column(Boolean)
     motm = Column(Boolean)
 
@@ -75,7 +81,7 @@ class Event(Base):
     id = Column(Integer, primary_key=True)
     game_id = Column(Integer, ForeignKey('games.id')) 
     team_id = Column(Integer, ForeignKey('teams.id')) 
-    player_id = Column(Integer, ForeignKey('players.id')) 
+    team_player_id = Column(Integer, ForeignKey('team_players.id')) 
     ws_id = Column(Integer)
     touch = Column(Boolean)
     outcome = Column(String)
@@ -85,3 +91,6 @@ class Event(Base):
     end_y = Column(Float)
     event_type = Column(String)
     satisfied_event_tpes = Column(String)
+
+
+Base.metadata.create_all(engine)
