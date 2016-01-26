@@ -24,11 +24,11 @@ class Game(Base):
     home_id = Column(Integer, ForeignKey('performances.id')) 
     away_id = Column(Integer, ForeignKey('performances.id')) 
 
-
 class Performance(Base):
     __tablename__ = "performances"
     id = Column(Integer, primary_key=True)
     game_id = Column(Integer, ForeignKey('games.id')) 
+    team_manager_id = Column(Integer, ForeignKey('team_managers.id')) 
 
 class Player(Base):
     __tablename__ = "players"
@@ -40,6 +40,18 @@ class Player(Base):
     weight = Column(Integer)
     shirt = Column(Integer)
     position = Column(String)
+
+class Manager(Base):
+    __tablename__ = "managers"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+class TeamManager(Base):
+    __tablename__ = "team_managers"
+    id = Column(Integer, primary_key=True)
+    team_id = Column(Integer, ForeignKey('teams.id')) 
+    manager_id = Column(Integer, ForeignKey('managers.id')) 
+
 
 class TeamPlayer(Base):
     __tablename__ = "team_players"
