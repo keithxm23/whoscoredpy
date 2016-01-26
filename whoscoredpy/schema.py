@@ -39,7 +39,6 @@ class Player(Base):
     height = Column(Integer)
     weight = Column(Integer)
     shirt = Column(Integer)
-    position = Column(String)
 
 class Manager(Base):
     __tablename__ = "managers"
@@ -75,6 +74,7 @@ class PlayerPerformaceMap(Base):
     team_player_id = Column(Integer, ForeignKey('team_players.id')) 
     started = Column(Boolean)
     motm = Column(Boolean)
+    position = Column(String)
 
 class EventType(Base):
     __tablename__ = "event_types"
